@@ -30,39 +30,59 @@ class Post // extends Model
     
     public static function all()
     {
-        $files = File::files(resource_path("posts/"));
+        // $files = File::files(resource_path("posts/"));
         // $posts = [];
 
-        $posts = array_map(function($file) {
-            $document = YamlFrontMatter::parseFile($file);
+        // $posts = array_map(function($file) {
+        //     $document = YamlFrontMatter::parseFile($file);
 
-            return new Post(
+        //     return new Post(
+        //         $document->title,
+        //         $document->slug,
+        //         $document->body(),
+        //         $document->excerpt,
+        //         $document->date
+        //     );
+        // }, $files);
+        
+        // return array_map(fn($file) => $file->getContents(), $files);
+
+        $posts = collect(File::files(resource_path("posts/")))
+            ->map(fn($file) => YamlFrontMatter::parseFile($file))
+            ->map(fn($document) => new Post(
                 $document->title,
                 $document->slug,
                 $document->body(),
                 $document->excerpt,
                 $document->date
-            );
-        }, $files);
-        
-        // return array_map(fn($file) => $file->getContents(), $files);
+            ));
         
         return $posts;
     }
 
+    
+    // public static function find($slug)
+    // {
+    //     // $path = file_get_contents(__DIR__ . "/../resources/posts/{$slug}.html");
+    //     // $path = __DIR__ . "/../resources/posts/{$slug}.html";
+    //     $path = resource_path("posts/{$slug}.html");
+
+    //     if(!file_exists($path)) {
+    //         // abort(404);
+    //         // return redirect('/');
+    //         throw new ModelNotFoundException();
+    //     }
+
+    //     // return $post;
+    //     return cache()->remember("posts.{$slug}", 10, fn() => file_get_contents($path));
+    // }
+
     public static function find($slug)
     {
-        // $path = file_get_contents(__DIR__ . "/../resources/posts/{$slug}.html");
-        // $path = __DIR__ . "/../resources/posts/{$slug}.html";
-        $path = resource_path("posts/{$slug}.html");
+        // of all the blog posts, find the one with a slug that matches the one that was requested
 
-        if(!file_exists($path)) {
-            // abort(404);
-            // return redirect('/');
-            throw new ModelNotFoundException();
-        }
+        $posts = static::all();
 
-        // return $post;
-        return cache()->remember("posts.{$slug}", 10, fn() => file_get_contents($path));
+        return $posts->firstWhere('slug', $slug);
     }
 }
