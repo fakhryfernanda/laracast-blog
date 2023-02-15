@@ -47,17 +47,18 @@ class Post // extends Model
         
         // return array_map(fn($file) => $file->getContents(), $files);
 
-        $posts = collect(File::files(resource_path("posts/")))
-            ->map(fn($file) => YamlFrontMatter::parseFile($file))
-            ->map(fn($document) => new Post(
-                $document->title,
-                $document->slug,
-                $document->body(),
-                $document->excerpt,
-                $document->date
-            ));
-        
-        return $posts;
+        return cache()->rememberForever('posts.all', function() {
+            return collect(File::files(resource_path("posts/")))
+                ->map(fn($file) => YamlFrontMatter::parseFile($file))
+                ->map(fn($document) => new Post(
+                    $document->title,
+                    $document->slug,
+                    $document->body(),
+                    $document->excerpt,
+                    $document->date
+                ))
+                ->sortByDesc('date');
+        });
     }
 
     
