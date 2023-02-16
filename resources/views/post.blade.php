@@ -4,7 +4,7 @@
     <article>
         <h1>{{ $post->title }}</h1>
         <p>
-            In category <a href="#">{{ $post->category->name }}</a>
+            In category <a href="/categories/{{ $post->category->slug }}">{{ $post->category->name }}</a>
         </p>
 
         <div>
