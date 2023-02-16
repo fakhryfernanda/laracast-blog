@@ -7,6 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    @yield('content')
+    {{-- @yield('content') --}}
+    {{ $slot }}
 </body>
 </html>
