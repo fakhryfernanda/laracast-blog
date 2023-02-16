@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -21,6 +22,7 @@ class PostFactory extends Factory
             'title' => fake()->sentence(),
             // 'category_id' => Category::factory()->create(),
             'category_id' => array_rand(Category::pluck('id')->toArray()) + 1,
+            'user_id' => array_rand(User::pluck('id')->toArray()) + 1,
             'slug' => fake()->slug(),
             'excerpt' => fake()->sentence(5),
             'body' => fake()->paragraph(4)

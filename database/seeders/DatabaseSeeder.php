@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Post;
+use App\Models\User;
 use App\Models\Category;
 use Illuminate\Database\Seeder;
 
@@ -47,6 +48,7 @@ class DatabaseSeeder extends Seeder
         // ]);
         
         Category::factory(3)->create();
+        User::factory(5)->create();
         Post::factory(10)->create();
     }
 }
