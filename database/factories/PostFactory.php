@@ -24,8 +24,8 @@ class PostFactory extends Factory
             'category_id' => array_rand(Category::pluck('id')->toArray()) + 1,
             'user_id' => array_rand(User::pluck('id')->toArray()) + 1,
             'slug' => fake()->slug(),
-            'excerpt' => fake()->sentence(5),
-            'body' => fake()->paragraph(4)
+            'excerpt' => '<p>' . implode('</p><p>', $this->faker->paragraphs(2)) . '</p>',
+            'body' => '<p>' . implode('</p><p>', $this->faker->paragraphs(6)) . '</p>'
         ];
     }
 }

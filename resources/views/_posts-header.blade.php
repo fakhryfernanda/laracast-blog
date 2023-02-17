@@ -3,14 +3,6 @@
         Latest <span class="text-blue-500">Laravel From Scratch</span> News
     </h1>
 
-    <h2 class="inline-flex mt-2">By Lary Laracore <img src="/images/lary-head.svg"
-                                                       alt="Head of Lary the mascot"></h2>
-
-    <p class="text-sm mt-14">
-        Another year. Another update. We're refreshing the popular Laravel series with new content.
-        I'm going to keep you guys up to speed with what's going on!
-    </p>
-
     <div class="space-y-2 lg:space-y-0 lg:space-x-4 mt-8">
         <!--  Category -->
         <div class="relative lg:inline-flex bg-gray-100 rounded-xl">
@@ -26,7 +18,7 @@
                     </button>
                 {{-- </x-slot> --}}
                 
-                <div x-show="show" class="absolute w-full mt-2 bg-gray-100 rounded-xl">
+                <div x-show="show" class="py-2 absolute bg-gray-100 mt-2 rounded-xl w-full z-50 overflow-auto max-h-52">
                     <x-dropdown-item href="/" :active="request()->routeIs('home')">All</x-dropdown-item>
     
                     @foreach ($categories as $category)
