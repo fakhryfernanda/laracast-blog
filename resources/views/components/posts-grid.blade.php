@@ -1,6 +1,6 @@
 @props(['posts'])
 
-<x-post-featured-card :post="$posts[0]" />
+<x-post-featured-card :post="$posts[0]" :category="$posts[0]->category" />
 
 @if ($posts->count() > 1)
     <div class="lg:grid lg:grid-cols-6">
