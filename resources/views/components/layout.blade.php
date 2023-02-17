@@ -27,6 +27,8 @@
                 </a>
             </div>
         </nav>
+
+        <x-flash />
     
         {{ $slot }}
 
