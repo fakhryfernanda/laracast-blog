@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use MailchimpMarketing\ApiClient;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
@@ -8,6 +9,7 @@ use Spatie\YamlFrontMatter\YamlFrontMatter;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\PostCommentController;
+use App\Services\Newsletter;
 
 Route::get('/ping', function () {
     $mailchimp = new ApiClient();
@@ -17,14 +19,29 @@ Route::get('/ping', function () {
         'server' => 'us9'
     ]);
 
+    // ping
     // $response = $mailchimp->ping->get();
-    $response = $mailchimp->lists->getAllLists();
+
+    // get list
+    // $response = $mailchimp->lists->getAllLists();
+
+
+    $list_id = "c9f8293a97";
+
+    // get members info
+    $response = $mailchimp->lists->getListMembersInfo($list_id)->members;
+
+    // add member
+    // $response = $mailchimp->lists->addListMember($list_id, [
+    //     "email_address" => "Lindsey.White93@hotmail.com",
+    //     "status" => "subscribed",
+    // ]);
+
 
     dd($response);
-    print_r($response);
 });
 
-Route::post('newsletter', NewsletterController::class);
+Route::post('/newsletter', NewsletterController::class);
 
 Route::get('/', [PostController::class, 'index'])->name('home');
 Route::get('posts/{post:slug}', [PostController::class, 'show']);
